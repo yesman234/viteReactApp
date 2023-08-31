@@ -54,6 +54,16 @@ function Header(){
 function Menu(){
   return <main className='menu'>
     <h2>Our Menu</h2>
+    <Pizza 
+    name="Pizza Spinaci" 
+    ingredients ="Tomato, mozarella, spinach, and ricotta cheese" 
+    photoName="pizzas/spinaci.jpg" 
+    price={10}/>
+    <Pizza 
+    name="Pizza Funghi" 
+    ingredients ="Tomato, mozarella, mushrooms, and onion" 
+    photoName="pizzas/funghi.jpg" 
+    price={12}/>
   </main>
 
 }
@@ -64,20 +74,23 @@ const openHour =8;
 const closeHour =22;
 const isOpen =(hour >= openHour && hour <= closeHour);
 console.table(isOpen)
-return <footer className='footer'>
-  {new Date().toLocaleTimeString()} <span>We're open</span>
-</footer>
+return (<footer className='footer'>
+  {new Date().toLocaleTimeString()} 
+  <span> We're open</span>
+</footer>)
 }
 
 
-function Pizza(){
+function Pizza(props){
+  console.log(props);
   return (
-    <div>
-      <img src='pizzas/spinaci.jpg' alt="Pizzas spinaci"/>
-      <h2>Pizza Spinaci</h2>
-      <p>Tomato, mozarella, spinach, and ricotta cheese</p>
+    <div className='pizza'>
+     <img src={props.photoName} alt={props.name} />
+  <div>
+      <h4>{props.ingredients}</h4>
+      <strong><p>{props.price + 3}</p></strong>
     </div>
-
+    </div>
   )
 }
 function App() {
@@ -88,7 +101,6 @@ function App() {
       <div className="container">
       <Header/>
       <Menu/>
-      <Pizza />
       <Footer/>
        </div>
     </>
