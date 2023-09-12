@@ -1,5 +1,3 @@
-import { useState } from 'react'
-import ReactDOM from "react-dom/client";
 import './App.css'
 
 const pizzaData = [
@@ -49,53 +47,80 @@ const pizzaData = [
 
 function Header(){
    const style = {};
-  return <header className='header footer'><h1 style={style}>Fast React Pizza Co.</h1></header>
+  return <header className='header footer'>
+    <h1 style={style}>
+    Fast React Pizza Co.</h1>
+    </header>
 }
 function Menu(){
-  return <main className='menu'>
-    <h2>Our Menu</h2>
-    <Pizza 
-    name="Pizza Spinaci" 
-    ingredients ="Tomato, mozarella, spinach, and ricotta cheese" 
-    photoName="pizzas/spinaci.jpg" 
-    price={10}/>
-    <Pizza 
-    name="Pizza Funghi" 
-    ingredients ="Tomato, mozarella, mushrooms, and onion" 
-    photoName="pizzas/funghi.jpg" 
-    price={12}/>
-  </main>
-
-}
-function Footer(){
-  //& 
-const hour = new Date().getHours();
-const openHour =8;
-const closeHour =22;
-const isOpen =(hour >= openHour && hour <= closeHour);
-console.table(isOpen)
-return (<footer className='footer'>
-  {new Date().toLocaleTimeString()} 
-  <span> We're open</span>
-</footer>)
-}
-
-
-function Pizza(props){
-  console.log(props);
+  const pizzas = pizzaData;
+  const numOfpizzas = pizzas.length;
   return (
-    <div className='pizza'>
-     <img src={props.photoName} alt={props.name} />
+  <main className='menu'>
+    <h2>Our Menu</h2>
+    {numOfpizzas > 0 && (
+    <ul className='pizzas'>
+    {pizzas.map((pizza)=>(
+    <Pizza pizzaObj={pizza} key={pizza.name}/>
+    ))}
+    </ul>
+)}
+  </main>)
+
+}
+
+function Pizza({pizzaObj}){
+  console.log(pizzaObj)
+  return (
+    <li className='pizza'>
+     <img src={pizzaObj.photoName} alt={pizzaObj.name} />
   <div>
-      <h4>{props.ingredients}</h4>
-      <strong><p>{props.price + 3}</p></strong>
+    <h3>{pizzaObj.name}</h3>
+      <h4>{pizzaObj.ingredients}</h4>
+      <strong><p>{pizzaObj.price + 3}</p></strong>
     </div>
+    </li>
+  )
+}
+
+
+function Footer(){
+  const hour = new Date().getHours();
+  const openHour =12;
+  const closeHour =22;
+  
+  const isOpen = hour >= openHour && hour <= closeHour;
+  console.log(isOpen)
+  
+  // if(!isOpen){
+  // return(<h2>Closed</h2>)
+  // }
+  return (
+  <footer className='footer'>
+    { isOpen ? (
+      <Order closeHour={closeHour} openHour={openHour}/>
+    ):(
+      <p>
+        We're happy to serve between {openHour}:00 a.m. & {closeHour}:00 p.m. daily. 
+      </p>
+    )}
+  </footer>)
+  }
+
+function Order({closeHour, openHour}){
+    console.log({openHour})
+ return (
+    <div className='order'>
+      <p>
+        We're open from {openHour} & We close @ {closeHour}, last orders for takeout must be made by {closeHour - 1} p.m.
+      </p>
+      <button className='btn'>order</button>
     </div>
   )
 }
-function App() {
-  const [count, setCount] = useState(0)
 
+   
+function App() {
   return (
     <>
       <div className="container">
