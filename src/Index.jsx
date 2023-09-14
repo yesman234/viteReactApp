@@ -47,7 +47,7 @@ const pizzaData = [
 
 function Header(){
    const style = {};
-  return <header className='header footer'>
+  return <header className='header'>
     <h1 style={style}>
     Fast React Pizza Co.</h1>
     </header>
@@ -72,12 +72,15 @@ function Menu(){
 function Pizza({pizzaObj}){
   console.log(pizzaObj)
   return (
-    <li className='pizza'>
+    <li className={`pizza ${pizzaObj.soldOut ? 'sold-out' : ''}`}>
      <img src={pizzaObj.photoName} alt={pizzaObj.name} />
   <div>
     <h3>{pizzaObj.name}</h3>
       <h4>{pizzaObj.ingredients}</h4>
-      <strong><p>{pizzaObj.price + 3}</p></strong>
+      {/* <strong><p>{pizzaObj.price + 3}</p></strong> */}
+      <span>{pizzaObj.soldOut ?<center><caption>sold out</caption></center>:
+      pizzaObj.price}</span>
+      
     </div>
     </li>
   )
@@ -88,7 +91,6 @@ function Footer(){
   const hour = new Date().getHours();
   const openHour =12;
   const closeHour =22;
-  
   const isOpen = hour >= openHour && hour <= closeHour;
   console.log(isOpen)
   
@@ -104,8 +106,9 @@ function Footer(){
         We're happy to serve between {openHour}:00 a.m. & {closeHour}:00 p.m. daily. 
       </p>
     )}
-  </footer>)
-  }
+  </footer>
+  )
+}
 
 function Order({closeHour, openHour}){
     console.log({openHour})
