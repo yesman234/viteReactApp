@@ -80,7 +80,7 @@ function Pizza({pizzaObj}){
       {/* <strong><p>{pizzaObj.price + 3}</p></strong> */}
       <span>{pizzaObj.soldOut ?<center><caption>sold out</caption></center>:
       pizzaObj.price}</span>
-      
+      <strong><button type="button">Checkout/paypal</button></strong>
     </div>
     </li>
   )
